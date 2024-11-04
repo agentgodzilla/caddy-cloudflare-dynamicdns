@@ -20,12 +20,8 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Get latest release of pihole docker container
+    - name: Get latest release of caddy docker container
       id: latest_release
-      env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: "pi-hole/docker-pi-hole"
-        type: "stable"
       run: echo release=$(curl --silent "https://api.github.com/repos/caddyserver/caddy/releases/latest" | jq -r '.tag_name') >> $GITHUB_OUTPUT
     
     - name: Get lowercase repo name
@@ -58,7 +54,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        build-args: PIHOLE_VERSION=${{ steps.latest_release.outputs.release }}
         context: "{{defaultContext}}:caddy-cloudflare/"
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
