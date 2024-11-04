@@ -6,9 +6,6 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'pihole-unbound/**'
-      - '.github/workflows/auto-build-container.yml'
   schedule:
   # cron job to trigger the build daily at 3am
     - cron:  '0 3 * * *'
@@ -29,12 +26,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Get latest release of pihole docker container
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Get latest release of caddy docker container
       id: latest_release
-      env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: "pi-hole/docker-pi-hole"
-        type: "stable"
       run: echo release=$(curl --silent "https://api.github.com/repos/caddyserver/caddy/releases/latest" | jq -r '.tag_name') >> $GITHUB_OUTPUT
     
     - name: Get lowercase repo name
@@ -45,10 +41,6 @@ jobs:
       
     - name: Get previous release tag
       id: previous_release
-      env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: "${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}"
-        type: "stable"
       run: echo release=$(curl --silent "https://api.github.com/repos/${{ github.actor }}/caddy-cloudflare/releases/latest" | jq -r '.tag_name' ) >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
@@ -70,8 +62,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        build-args: PIHOLE_VERSION=${{ steps.latest_release.outputs.release }}
-        context: "{{defaultContext}}:pihole-unbound/"
+        context: "{{defaultContext}}:caddy-cloudflare/"
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:latest,${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:${{ steps.latest_release.outputs.release }}
@@ -85,7 +76,7 @@ jobs:
         tag_name: ${{ steps.latest_release.outputs.release }}
         name: "${{ steps.latest_release.outputs.release }}"
         body: |
-          Changelog found on [pi-hole github](https://github.com/pi-hole/docker-pi-hole/releases), please read the changes before updating.
+          Changelog found on [caddy github](https://github.com/caddyserver/caddy/releases), please read the changes before updating.
           You can update the docker image with:
           ```
           docker compose pull
