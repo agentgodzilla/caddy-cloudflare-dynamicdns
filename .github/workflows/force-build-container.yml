@@ -59,7 +59,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         build-args: PIHOLE_VERSION=${{ steps.latest_release.outputs.release }}
-        context: "{{defaultContext}}:pihole-unbound/"
+        context: "{{defaultContext}}:caddy-cloudflare/"
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:latest,${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:${{ steps.latest_release.outputs.release }}
@@ -72,7 +72,7 @@ jobs:
         tag_name: ${{ steps.latest_release.outputs.release }}
         name: "${{ steps.latest_release.outputs.release }}"
         body: |
-          Changelog found on [pi-hole github](https://github.com/pi-hole/docker-pi-hole/releases), please read the changes before updating.
+          Changelog found on [caddy github](https://github.com/caddyserver/caddy/releases), please read the changes before updating.
           You can update the docker image with:
           ```
           docker compose pull
