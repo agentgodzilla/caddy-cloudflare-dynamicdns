@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      # Check for npm updates at 9am UTC
+      time: "14:00"
+      day: "friday"
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      # Check for npm updates at 9am UTC
+      time: "14:00"
+      day: "friday"
