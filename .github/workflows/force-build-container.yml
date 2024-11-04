@@ -32,10 +32,6 @@ jobs:
       
     - name: Get previous release tag
       id: previous_release
-      env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: "${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}"
-        type: "stable"
       run: echo release=$(curl --silent "https://api.github.com/repos/${{ github.actor }}/caddy-cloudflare/releases/latest" | jq -r '.tag_name' ) >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
