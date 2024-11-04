@@ -1,8 +1,5 @@
 # caddy-cloudflare
 
-[![](https://img.shields.io/docker/cloud/build/technoguyfication/caddy-cloudflare)](https://hub.docker.com/r/technoguyfication/caddy-cloudflare)
-[![](https://img.shields.io/docker/pulls/technoguyfication/caddy-cloudflare)](https://hub.docker.com/r/technoguyfication/caddy-cloudflare)
-
 Caddy with integrated support for Cloudflare DNS-01 ACME verification challenges.
 
 I'm using this image in production myself, but you may wish to fork it and deploy your own version rather than trust my image (I would recommend you do).
