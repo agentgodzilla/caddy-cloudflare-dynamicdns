@@ -50,6 +50,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
+        build-args: CADDY_VERSION=${{ steps.latest_release.outputs.release }}
         context: "{{defaultContext}}:caddy-cloudflare/"
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
