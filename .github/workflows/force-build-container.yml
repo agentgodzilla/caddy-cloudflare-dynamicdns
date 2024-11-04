@@ -47,10 +47,16 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
       
+    - name: Calculate Docker Version to Pull
+      id: docker_pull_version
+      env: 
+        TAG: ${{ steps.latest_release.outputs.release }}
+      run: echo "CADDY_DOCKER_VERSION=${TAG#v}" >> $GITHUB_OUTPUT
+      
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        build-args: CADDY_VERSION=${{ steps.latest_release.outputs.release }}
+        build-args: CADDY_VERSION=${{ steps.docker_pull_version.outputs.CADDY_DOCKER_VERSION }}
         context: "{{defaultContext}}:caddy-cloudflare/"
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
