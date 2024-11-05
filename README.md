@@ -1,6 +1,6 @@
 # caddy-cloudflare
 
-Caddy with integrated support for Cloudflare DNS-01 ACME verification challenges.
+Caddy with integrated support for Cloudflare DNS-01 ACME verification challenges and Dynamic DNS app for Caddy.
 
 I'm using this image in production myself, but you may wish to fork it and deploy your own version rather than trust my image (I would recommend you do).
 
@@ -8,7 +8,7 @@ I'm using this image in production myself, but you may wish to fork it and deplo
 
 ## Images
 
-Includes images for regular and alpine versions of Caddy. Each are rebuilt every Monday morning at 0300 UTC from the `:latest` and `:alpine` tags respectively. Visit this repository on [Docker Hub](https://hub.docker.com/r/technoguyfication/caddy-cloudflare) to pull images.
+Includes images for regular versions of Caddy. Image is rebuilt whenever there is a commit on main or a new upstream version is detected 
 
 ## Requirements
 1. A Cloudflare account
