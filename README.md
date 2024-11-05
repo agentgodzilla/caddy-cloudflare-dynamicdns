@@ -55,7 +55,7 @@ Caddy will use DNS-01 ACME verification to generate certificates for any domains
 		-e ACME_EMAIL=me@example.com \
 		-e CLOUDFLARE_API_TOKEN=123457890 \
 		-e ACME_AGREE=true \
-		technoguyfication/caddy-cloudflare:latest
+		ghcr.io/agentgodzilla/caddy-cloudflare:latest
 	```
 
 	Or for docker-compose:
@@ -64,7 +64,7 @@ Caddy will use DNS-01 ACME verification to generate certificates for any domains
 
     services:
     caddy:
-      image: technoguyfication/caddy-cloudflare:latest
+      image: ghcr.io/agentgodzilla/caddy-cloudflare:latest
       restart: unless-stopped
       environment:
       - ACME_EMAIL="me@example.com"
@@ -77,8 +77,4 @@ Caddy will use DNS-01 ACME verification to generate certificates for any domains
       - caddy_data:/data
       - caddy_config:/config
       - $PWD/Caddyfile:/etc/caddy/Caddyfile
-
-    volumes:
-      caddy_data:
-      caddy_config:
 	```
