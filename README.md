@@ -27,11 +27,20 @@ Caddy will use DNS-01 ACME verification to generate certificates for any domains
 
 	The token does not need any more permissions than these for DNS-01 ACME verification.
 
-2. Add this to your Caddyfile (or create one with this):
+2. Add this to your Caddyfile (or create one with this).  You can omit sections you are not using:
 	```Caddyfile
 	{
-		acme_dns cloudflare {$CLOUDFLARE_API_TOKEN}
+		# cloudflare certificate generation
+ 		acme_dns cloudflare {$CLOUDFLARE_API_TOKEN}
 		email   {$ACME_EMAIL}
+
+ 		# couldflare ip address updating
+		dynamic_dns {
+			provider cloudflare {$CLOUDFLARE_API_TOKEN}
+			domains {
+				example.com
+			}
+		}
 	}
 	```
 
