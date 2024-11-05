@@ -61,6 +61,7 @@ jobs:
       env: 
         TAG: ${{ steps.latest_release.outputs.release }}
       run: echo "CADDY_DOCKER_VERSION=${TAG#v}" >> $GITHUB_OUTPUT
+      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release }}
       
     - name: Build and push
       uses: docker/build-push-action@v5
