@@ -1,4 +1,4 @@
-# caddy-cloudflare
+# caddy-cloudflare-dynamicdns 
 
 Caddy with integrated support for Cloudflare DNS-01 ACME verification challenges and Dynamic DNS app for Caddy.
 
