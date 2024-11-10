@@ -8,7 +8,7 @@ I'm using this image in production myself, but you may wish to fork it and deplo
 
 ## Images
 
-Includes images for regular versions of Caddy. Image is rebuilt whenever there is a commit on main or a new upstream version is detected 
+Includes images for regular versions of Caddy. Image is rebuilt whenever there is a commit on main or a new upstream version is detected (checked daily)
 
 ## Requirements
 1. A Cloudflare account
