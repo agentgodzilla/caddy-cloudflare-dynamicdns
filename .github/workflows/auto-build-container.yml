@@ -67,7 +67,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         build-args: CADDY_VERSION=${{ steps.docker_pull_version.outputs.CADDY_DOCKER_VERSION }}
-        context: "{{defaultContext}}:caddy-cloudflare/"
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:latest,${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:${{ steps.latest_release.outputs.release }}
