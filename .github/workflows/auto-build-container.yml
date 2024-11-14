@@ -38,7 +38,7 @@ jobs:
       
     - name: Get previous release tag
       id: previous_release
-      run: echo release=$(curl --silent "https://api.github.com/repos/${{ github.actor }}/${{ env.LOWER_CASE_REPO_NAME }}/releases/latest" | jq -r '.tag_name' ) >> $GITHUB_OUTPUT
+      run: echo release=$(curl --silent "https://api.github.com/repos/${{ env.LOWER_CASE_REPO_NAME }}/releases/latest" | jq -r '.tag_name' ) >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
