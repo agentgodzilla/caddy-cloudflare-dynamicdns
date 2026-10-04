@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Get latest release of caddy docker container
       id: latest_release
@@ -35,13 +35,13 @@ jobs:
       run: echo release=$(curl --silent "https://api.github.com/repos/${{ env.LOWER_CASE_REPO_NAME }}/releases/latest" | jq -r '.tag_name' ) >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
+      uses: docker/setup-qemu-action@v4
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      uses: docker/setup-buildx-action@v4
 
     - name: Log in to the Container registry
-      uses: docker/login-action@v2
+      uses: docker/login-action@v4
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
@@ -54,7 +54,7 @@ jobs:
       run: echo "CADDY_DOCKER_VERSION=${TAG#v}" >> $GITHUB_OUTPUT
       
     - name: Build and push
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v7
       with:
         build-args: CADDY_VERSION=${{ steps.docker_pull_version.outputs.CADDY_DOCKER_VERSION }}
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
