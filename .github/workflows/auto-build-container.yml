@@ -9,7 +9,13 @@ on:
   schedule:
   # cron job to trigger the build daily at 3am
     - cron:  '0 3 * * *'
-
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force a fresh build'
+        type: boolean
+        default: false
+        
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -54,14 +60,14 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release }}
+      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release || inputs.force }}
 
     - name: Calculate Docker Version to Pull
       id: docker_pull_version
       env: 
         TAG: ${{ steps.latest_release.outputs.release }}
       run: echo "CADDY_DOCKER_VERSION=${TAG#v}" >> $GITHUB_OUTPUT
-      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release }}
+      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release || inputs.force }}
       
     - name: Build and push
       uses: docker/build-push-action@v7
@@ -70,7 +76,7 @@ jobs:
         platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
         push: true
         tags: ${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:latest,${{ env.REGISTRY }}/${{ env.LOWER_CASE_REPO_NAME }}:${{ steps.latest_release.outputs.release }}
-      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release }}
+      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release || inputs.force }}
 
     - name: Create release
       uses: softprops/action-gh-release@v1
@@ -86,7 +92,7 @@ jobs:
           docker compose pull
           docker compose up -d
           ```
-      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release }}
+      if: ${{ steps.latest_release.outputs.release != steps.previous_release.outputs.release || inputs.force }}
       
   workflow-keepalive:
     if: github.event_name == 'schedule'
